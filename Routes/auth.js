@@ -8,8 +8,6 @@ const Joi= require('@hapi/joi');
 
 
 
-
-
 router.post('/register', async (req,res)=>{
     
     
@@ -43,7 +41,7 @@ router.post('/register', async (req,res)=>{
         console.log(req.body)
     }catch(err){
         res.status(400).send(err);
-        console.log("its error")
+        console.log(err)
     }
 
 });
@@ -58,7 +56,9 @@ router.post('/login', async (req,res)=> {
     if(!userExist) return res.status(400).send('wrong Username');
 
     //checking password
-    //const passwordValidbcrypt = await bcrypt.compare(req.body.password , user.password); 
+    //const salt=await bcrypt.genSalt(10);
+    //const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    //const passwordValidbcrypt = await bcrypt.compare(hashedPassword , user.password); 
     //if(!passwordValidbcrypt) return res.status(400).send('wrong password')
     const passwordValid = await User.findOne({password: req.body.password});
     if(!passwordValid) return res.status(400).send('wrong password');
