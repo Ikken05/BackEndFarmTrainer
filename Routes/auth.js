@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const {registerValidation,loginValidation}= require ('../validation');
 const { schema } = require('../model/User');
 const Joi= require('@hapi/joi');
+const jwt= require('jsonwebtoken');
 
 
 
@@ -47,6 +48,8 @@ router.post('/register', async (req,res)=>{
 });
 //login
 router.post('/login', async (req,res)=> {
+    
+    try{
     //validating data
     //const{error}= loginValidation(req.body);
     //  if (error) return res.status(400).send(error.details[0].message);
@@ -56,16 +59,22 @@ router.post('/login', async (req,res)=> {
     if(!userExist) return res.status(400).send('wrong Username');
 
     //checking password
-    //const salt=await bcrypt.genSalt(10);
-    //const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    //const passwordValidbcrypt = await bcrypt.compare(hashedPassword , user.password); 
+    
+    //const passwordValidbcrypt = await bcrypt.compare(req.body.password , user.password); 
     //if(!passwordValidbcrypt) return res.status(400).send('wrong password')
     const passwordValid = await User.findOne({password: req.body.password});
     if(!passwordValid) return res.status(400).send('wrong password');
     
+    //Creating and assigning token
+    const token= jwt.sign({_id: User._id}, process.env.TOKEN_SECRET);
+    res.header('auth-token', token).send(token);
+    console.log('you are logged in');
+    }catch(err){
+        res.status(400).send(err);
+        console.log(err)
+    }
     
     
-    res.send('You are logged in');
 
 
 

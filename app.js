@@ -13,6 +13,7 @@ const typefieldRoute = require ('./routes/typefield');
 const workerRoute = require('./routes/workers');
 const materialRoute = require('./routes/material');
 const fieldRoute = require('./routes/field');
+const postRoute = require('./routes/post');
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ app.use('/api/typefield',typefieldRoute);
 app.use('/api/worker',workerRoute);
 app.use('/api/material',materialRoute);
 app.use('/api/field', fieldRoute);
+app.use('/api/post', postRoute);
 
 //Server Listener
 app.listen(3000, ()=> console.log("Server Running"));

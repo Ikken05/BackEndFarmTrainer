@@ -10,7 +10,9 @@ const TypeFieldSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    
+    TypeFieldImage:{
+        type: String
+    }
 
 });
 

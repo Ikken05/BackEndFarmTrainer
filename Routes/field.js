@@ -9,7 +9,7 @@ const Material = require('../model/Material');
 
 router.post('/addfield', async (req,res)=>{
 
-    const owner = await User.findOne({username: req.body.username});
+    /*const owner = await User.findOne({username: req.body.username});
     const typefield = await TypeField.findOne({TypeName: req.body.typename});
     const workers = await Workers.findOne({username: req.body.username_worker});
     const material = await Material.findOne({username: req.body.username_material});
@@ -18,14 +18,10 @@ router.post('/addfield', async (req,res)=>{
 
     const field = new Field ({
         Dimensions: req.body.dimensions,
-        TypeField:typename,
-        typefield:req.body.typefield,
-        Workers:workers,
-        workers:req.body.workers,
-        Material:material,
-        material: req.body.material,
-        Owner:owner,
-        owner: req.body.username
+        TypeField:req.body.typefield,
+        Workers:req.body.workers,
+        Material:req.body.material,
+        Owner:req.body.username
 
 
     }); 
@@ -36,7 +32,11 @@ router.post('/addfield', async (req,res)=>{
     }catch(err){
         res.status(400).send(err);
         console.log(err)
-    }
+    }*/
+    
+
+
+
 
 });
 

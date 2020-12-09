@@ -1,11 +1,23 @@
 const router = require('express').Router();
 const TypeField = require('../model/TypeField');
 const { schema } = require('../model/TypeField');
+const multer = require('multer');
 
-router.post('/addtypefield', async (req,res)=>{
+const storage = multer.diskStorage({
+    destination: (req, file, callBack) => {
+      callBack(null, 'uploads')
+    },
+    filename: (req, file, callBack) => {
+      callBack(null, file.originalname)
+    }
+  })
+  const upload = multer({ storage: storage })
+
+router.post('/addtypefield',upload.single('TypeFieldImage'), async (req,res)=>{
     const typefield = new TypeField ({
         TypeName: req.body.typename,
-        ReadyTime: req.body.readytime
+        ReadyTime: req.body.readytime,
+        TypeFieldImage:req.file.path
         
     }); try{
         const savedTypeField = await typefield.save();

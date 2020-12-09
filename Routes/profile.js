@@ -2,19 +2,46 @@ const router = require('express').Router();
 const multer = require('multer');
 const User = require('../model/User');
 const { schema } = require('../model/User');
-const upload = multer({dest: './uploads'});
+//const upload = multer({dest: './uploads'});
+
+const storage = multer.diskStorage({
+    destination: (req, file, callBack) => {
+      callBack(null, 'uploads')
+    },
+    filename: (req, file, callBack) => {
+      callBack(null, file.originalname)
+    }
+  })
+  const upload = multer({ storage: storage })
 
 router.post("/uploadimage",upload.single('profileimage'),async (req,res)=>{
 
-try{
-    profileimage:req.body.profileimage;
-    const passwordValid = await User.findOne({password: req.body.password});
-    if(!passwordValid) return res.status(400).send('wrong password');
+
+    
+
+    const userExist = await User.findOne({username: req.body.username});
+    if(!userExist) return res.status(400).send('wrong Username');
+    const user = new User({
+        fullname: req.body.fullname,
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+        role: req.body.role,
+        profileimage:req.file.path
+    })
+    try{
+    
+   
     console.log(req.file);
-    const savedUser = await user.save();
-}catch(err){
+    const updateUser = await User.updateOne ({username: user.username}, 
+                                          {$set: {fullname:user.fullname,
+                                            email:user.email,
+                                            password: user.password,
+                                            profileimage: user.profileimage
+                                          }});
+    }catch(err){
     res.json({message : err});
-}
+    }
 
 
 });
