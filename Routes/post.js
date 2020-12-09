@@ -1,8 +1,11 @@
 const router = require('express').Router();
 const Post = require('../model/Post');
 const User = require('../model/User');
+const Upvote = require('../model/Upvote');
+const Downvote = require('../model/Downvote');
 const Comments = require('../model/Comments');
 const { schema } = require('../model/Post');
+
 
 router.post('/addpost', async (req,res)=>{
 
@@ -75,6 +78,50 @@ router.post('/addcomment', async (req,res)=>{
         console.log(err)
     }
 });
+router.post('/addupvote', async (req,res)=>{
+
+    
+
+    const upvote = new Upvote ({
+        
+        
+        post: req.body.post,
+        userpost: req.body.userpost,
+        userupvote:req.body.userupvote
+        
+    }); 
+    try{
+        const savedUpvote = await Upvote.save();
+        res.json({upvote: upvote._body});
+        console.log(req.body)
+    }catch(err){
+        res.status(400).send(err);
+        console.log(err)
+    }
+});
+
+router.post('/addDownvote', async (req,res)=>{
+
+    
+
+    const downvote = new Downvote ({
+        
+        
+        post: req.body.post,
+        userpost: req.body.userpost,
+        userupvote:req.body.userupvote
+        
+    }); 
+    try{
+        const savedDownvote = await Downvote.save();
+        res.json({downvote: downvote._body});
+        console.log(req.body)
+    }catch(err){
+        res.status(400).send(err);
+        console.log(err)
+    }
+});
+
 
 
 
