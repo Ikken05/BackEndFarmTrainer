@@ -20,7 +20,12 @@ var PostSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Downvote'
     }],
-    user: { type: String, ref: 'users' }
+    user: { type: String, ref: 'users' },
+    topic:{
+      type:String,
+      required:true
+    },
+    
 
 });
 

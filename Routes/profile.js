@@ -20,7 +20,7 @@ router.post("/uploadimage",upload.single('profileimage'),async (req,res)=>{
     
 
     const userExist = await User.findOne({username: req.body.username});
-    if(!userExist) return res.status(400).send('wrong Username');
+    //if(!userExist) return res.status(400).send('wrong Username');
     const user = new User({
         fullname: req.body.fullname,
         username: req.body.username,
@@ -43,6 +43,17 @@ router.post("/uploadimage",upload.single('profileimage'),async (req,res)=>{
     res.json({message : err});
     }
 
+
+});
+
+
+router.get('/getuser', async(req,res)=>{
+  try{
+    const user = await User.findOne({username:req.body.username});
+    res.json(user); 
+}catch(err){
+    res.json({message : err});
+}
 
 });
 

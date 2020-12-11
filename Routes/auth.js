@@ -13,8 +13,8 @@ router.post('/register', async (req,res)=>{
     
     
     //validating data
-    //const{error}= registerValidation(req.body);
-    //if (error) return res.status(400).send(error.details[0].message);
+    const{error}= registerValidation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
     
     
     //checking if user already in use
@@ -38,8 +38,8 @@ router.post('/register', async (req,res)=>{
     }); 
     try{
         const savedUser = await user.save();
-        res.json({user: user._id});
-        console.log(req.body)
+        res.json(user);
+        console.log(req.body);
     }catch(err){
         res.status(400).send(err);
         console.log(err)
@@ -49,10 +49,10 @@ router.post('/register', async (req,res)=>{
 //login
 router.post('/login', async (req,res)=> {
     
-    try{
+    
     //validating data
-    //const{error}= loginValidation(req.body);
-    //  if (error) return res.status(400).send(error.details[0].message);
+    const{error}= loginValidation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
 
     //checking username
     const userExist = await User.findOne({username: req.body.username});
@@ -62,21 +62,15 @@ router.post('/login', async (req,res)=> {
     
     //const passwordValidbcrypt = await bcrypt.compare(req.body.password , user.password); 
     //if(!passwordValidbcrypt) return res.status(400).send('wrong password')
-    const passwordValid = await User.findOne({password: req.body.password});
-    if(!passwordValid) return res.status(400).send('wrong password');
+    const passwordValid = req.body.password.localeCompare(userExist.password);
+    if(passwordValid) return res.status(400).send('wrong password');
+
+    console.log('you are logged in');
+    res.send("you are logged in")
     
     //Creating and assigning token
-    const token= jwt.sign({_id: User._id}, process.env.TOKEN_SECRET);
-    res.header('auth-token', token).send(token);
-    console.log('you are logged in');
-    }catch(err){
-        res.status(400).send(err);
-        console.log(err)
-    }
-    
-    
-
-
+    /*const token= jwt.sign({_id: User._id}, process.env.TOKEN_SECRET);
+    res.header('auth-token', token).send(token);*/
 
 });
 

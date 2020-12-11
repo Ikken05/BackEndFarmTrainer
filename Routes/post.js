@@ -9,13 +9,15 @@ const { schema } = require('../model/Post');
 
 router.post('/addpost', async (req,res)=>{
 
-    
+    const Currentdate = new Date();
     
     const post = new Post ({
         
 
         question: req.body.question,
         user: req.body.username,
+        topic: req.body.topic,
+        
         
     }); 
     try{
@@ -66,7 +68,9 @@ router.post('/addcomment', async (req,res)=>{
         body:req.body.body,
         post: req.body.post,
         userpost: req.body.userpost,
-        usercomment:req.body.usercomment
+        usercomment:req.body.usercomment,
+        postid:req.body.postid,
+
         
     }); 
     try{
@@ -135,6 +139,9 @@ router.get('/allposts',async(req,res)=>{
 
 });
 
+
+
+
 /*router.get('/latestposts',async(req,res)=>{
     try{
         const post = await Post.find().limit(3);
@@ -146,7 +153,8 @@ router.get('/allposts',async(req,res)=>{
 
 router.get('/allcomments', async(req,res)=>{
     try{
-        const comments = await Comments.find({post:req.body.post,userpost:req.body.userpost});
+        
+        const comments = await Comments.findby({postid:req.body.postid});
         res.json(comments); 
     }catch(err){
         res.json({message : err});
