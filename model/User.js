@@ -26,8 +26,12 @@ const userSchema = new mongoose.Schema({
     },
     profileimage:{
         type: String,
-        url: String
-    }
+        default: '/uploads/sponge_homer.jpg'
+    },
+    phone :{
+        type:Number
+    },
+    
 });
 
 

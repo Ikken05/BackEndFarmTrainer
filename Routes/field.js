@@ -1,48 +1,109 @@
 const router = require('express').Router();
+const mongoose = require('mongoose');
 const Field = require('../model/Field');
 const { schema } = require('../model/Field');
 const User = require('../model/User');
-const TypeField = require('../model/TypeField');
-const Workers = require('../model/Workers');
-const Material = require('../model/Material');
+
+
 
 
 router.post('/addfield', async (req,res)=>{
 
-    /*const owner = await User.findOne({username: req.body.username});
-    const typefield = await TypeField.findOne({TypeName: req.body.typename});
-    const workers = await Workers.findOne({username: req.body.username_worker});
-    const material = await Material.findOne({username: req.body.username_material});
-    // user:{type: Schema.Types.ObjectId, ref:'esmref'}
-
-
+    const foundcreator = await User.findOne({username: req.body.username});
     const field = new Field ({
-        Dimensions: req.body.dimensions,
-        TypeField:req.body.typefield,
-        Workers:req.body.workers,
-        Material:req.body.material,
-        Owner:req.body.username
-
-
+        
+        dimensions : req.body.dimensions,
+        
+        ReadyTime : req.body.ReadyTime,
+        TypeName: req.body.TypeName,
+        
+        
+        Fullname : req.body.Fullname,
+        Role: req.body.Role,
+        
+        
+        Type : req.body.Type,
+        
+        creator: req.body.username
+        
+        
     }); 
+
+    //res.send(JSON.stringify(field));
+    
     try{
-        const savedField = await Field.save();
-        res.json({field: field._id});
-        console.log(req.body)
+        const savedField = await field.save();   
+        res.json({savedField , status : true , message:"Field successfully created!"});
+        console.log(savedField);
     }catch(err){
         res.status(400).send(err);
         console.log(err)
-    }*/
-    
-
+    }
 
 
 
 });
 
 
+router.get('/showuserfields',async (req,res)=>{
+    try{
+        const foundField = await Field.find({creator:req.body.username});
+        res.json({foundField});
+        console.log({foundField});
+    }catch(error){
+        res.json({message:error});
+    }
 
 
+});
+
+
+
+router.get('/showtypefield', async (req,res)=>{
+    try{
+        const foundField = await Field.findById(req.body.id);
+        res.json({TypeName:foundField.TypeName,ReadyTime:foundField.ReadyTime});
+        console.log({TypeName: foundField.TypeName,ReadyTime:foundField.ReadyTime});
+    }catch(error){
+        res.json({message:error});
+    }
+
+});
+
+
+router.get('/showworker', async (req,res)=>{
+    try{
+        const foundWorker = await Field.findById(req.body.id);
+        res.json({Fullname:foundWorker.Fullname,Role:foundWorker.Role});
+        console.log({Fullname:foundWorker.Fullname,Role:foundWorker.Role});
+    }catch(error){
+        res.json({message:error});
+    }
+
+});
+
+
+router.get('/showmaterial', async (req,res)=>{
+    try{
+        const foundMaterial = await Field.findById(req.body.id);
+        res.json({Type:foundMaterial.Type});
+        console.log({Type:foundMaterial.Type});
+    }catch(error){
+        res.json({message:error});
+    }
+
+});
+
+
+router.get('/count',async (req,res)=>{
+    try{
+        const fieldnumber = await Field.count({creator:req.body.username});
+        res.json({fieldnumber});
+        console.log({fieldnumber});
+    }catch(error){
+        res.json({message:error});
+    }
+});
 
 
 

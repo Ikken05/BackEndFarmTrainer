@@ -7,24 +7,12 @@ var PostSchema = new mongoose.Schema({
       minlength: 10,
       maxlength: 260
     },
-    createAt: Date ,
-    comments: [{
-      type: String,
-      ref: 'Comment'
-    }],
-    upvote: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Upvote'
-    }],
-    downvote: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Downvote'
-    }],
     user: { type: String, ref: 'users' },
     topic:{
       type:String,
       required:true
     },
+    
     
 
 });

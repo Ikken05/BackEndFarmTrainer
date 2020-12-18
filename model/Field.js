@@ -1,24 +1,76 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 
-
-const FieldSchema = new mongoose.Schema({
+/*const TypeFieldSchema = new mongoose.Schema({
     
-    Dimensions:{
+    ReadyTime:{
         type:Number,
         required: true
     },
-    TypeField: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'TypeFields'
-      }],
-    Workers:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Workers'
-    }],
-    Material:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Materials'
+    TypeName:{
+        type:String,
+        required:true
+    },
+    TypeFieldImage:{
+        type: String
+    },
+    
+});
+const MaterialSchema = new mongoose.Schema({
+    
+    Type:{
+        type:String,
+        required: true
+    },
+    Field:{type: mongoose.Schema.Types.ObjectId, ref: 'Field'}
+    
+});
+const WorkersSchema = new mongoose.Schema({
+    
+    Fullname:{
+        type:String,
+        required: true
+    },
+    Role:{
+        type:String,
+        required:true
+    },
+    Field:{type: mongoose.Schema.Types.ObjectId, ref: 'Field'}
+});
+*/
+const FieldSchema = new mongoose.Schema({
+    
+    dimensions:{
+        type:Number,
+        required: true
+    },
+    
+    ReadyTime:{
+        type:Number,
+        required:true
+    },
+    TypeName:{
+        type:String,
+        required:true
+    },
+    
+    
+    Fullname:{
+        type:String,
+        required:true
+    },
+    Role:{
+        type:String,
+        required:true
+    },
+    
+    Type:{
+        type:String,
+        required:true
+    },
+    creator:{
+        type: String,
     }
 
 
@@ -27,4 +79,5 @@ const FieldSchema = new mongoose.Schema({
 
 
 
-module.exports = mongoose.model('Field',FieldSchema);
+const Field = mongoose.model('Field',FieldSchema);
+module.exports = Field;

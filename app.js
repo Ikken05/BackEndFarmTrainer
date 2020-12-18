@@ -5,6 +5,9 @@ const dotenv = require('dotenv');
 const bodyParser = require("body-parser");
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+  }));
 
 //Import Routes
 const authRoute = require ('./routes/auth'); 
@@ -14,13 +17,14 @@ const workerRoute = require('./routes/workers');
 const materialRoute = require('./routes/material');
 const fieldRoute = require('./routes/field');
 const postRoute = require('./routes/post');
+const jobRoute = require('./routes/job');
 
 dotenv.config();
 
 //Connection to DataBase
 mongoose.connect(
     process.env.DB_CONNECT,
-    { useNewUrlParser:true},
+    {useNewUrlParser: true, useUnifiedTopology: true},
     ()=>console.log('connected to database')
 );
 
@@ -30,13 +34,14 @@ app.use(express.json());
 
 
 //Route MiddleWares 
-app.use('/api/user',authRoute);
+app.use('/api/user', authRoute);
 app.use('/api/profile',profileRoute);
 app.use('/api/typefield',typefieldRoute);
 app.use('/api/worker',workerRoute);
 app.use('/api/material',materialRoute);
 app.use('/api/field', fieldRoute);
 app.use('/api/post', postRoute);
+app.use('/api/job', jobRoute);
 
 //Server Listener
 app.listen(3000, ()=> console.log("Server Running"));
