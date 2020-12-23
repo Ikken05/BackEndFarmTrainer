@@ -1,20 +1,31 @@
 var mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const {UserSchema} = require('./User');
 
-var PostSchema = new mongoose.Schema({
+const PostSchema = new mongoose.Schema({
+    
     question: {
       type: String,
       minlength: 10,
-      maxlength: 260
+      maxlength: 1000
     },
-    user: { type: String, ref: 'users' },
+
+    User: { 
+        type: UserSchema,  
+        required: true
+      },
+
     topic:{
       type:String,
-      required:true
+    },
+
+    date: {
+      type: Date,
+      default: Date.now
     },
     
-    
-
 });
 
-module.exports = mongoose.model("Post", PostSchema);
+
+const Post = mongoose.model('Post', PostSchema);
+exports.PostSchema = PostSchema;
+exports.Post = Post;

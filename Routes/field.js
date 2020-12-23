@@ -14,14 +14,15 @@ router.post('/addfield', async (req,res)=>{
         
         dimensions : req.body.dimensions,
         
+        //typefield
         ReadyTime : req.body.ReadyTime,
         TypeName: req.body.TypeName,
         
-        
+        //Worker
         Fullname : req.body.Fullname,
         Role: req.body.Role,
         
-        
+        //Material
         Type : req.body.Type,
         
         creator: req.body.username

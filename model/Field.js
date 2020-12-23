@@ -55,16 +55,18 @@ const FieldSchema = new mongoose.Schema({
         required:true
     },
     
-    
-    Fullname:{
+    //worker
+    worker:[{
+        Fullname:{
         type:String,
         required:true
     },
-    Role:{
+        Role:{
         type:String,
         required:true
-    },
+    }}],
     
+    //material
     Type:{
         type:String,
         required:true

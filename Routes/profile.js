@@ -26,14 +26,14 @@ router.post("/uploadimage", upload.single('profileimage'), async (req, res) => {
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
-    //profileimage: req.file.destination,
+    profileimage: req.file.path,
     phone: req.body.phone,
     
   })
   try {
 
 
-    console.log("azeaze" + req.file);
+    console.log("This is your file" + req.file);
     const updateUser = await User.updateOne({ username: user.username },
       {
         $set: {
