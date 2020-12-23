@@ -70,7 +70,7 @@ router.post('/addupvote', async (req,res)=>{
       userupvote:req.body.username,
       
   }); 
-  const usernameExist = await Upvote.findOne({ userupvote: req.body.username });
+  const usernameExist = await Upvote.findOne({ userupvote: req.body.username,postid : req.body.postid });
   if (usernameExist) return res.status(400).send('You cannot upvote a post twice');
   try{
       const savedUpvote = await upvote.save();
@@ -91,7 +91,7 @@ router.post('/addDownvote', async (req,res)=>{
       userdownvote:req.body.username
       
   }); 
-  const usernameExist = await Downvote.findOne({ userdownvote: req.body.username });
+  const usernameExist = await Downvote.findOne({ userdownvote: req.body.username,postid : req.body.postid  });
   if (usernameExist) return res.status(400).send('You cannot downvote a post twice');
   try{
       const savedDownvote = await downvote.save();
