@@ -1,21 +1,23 @@
 var mongoose = require('mongoose');
-const {UserSchema} = require('./User');
+const Schema = mongoose.Schema;
 
 const PostSchema = new mongoose.Schema({
     
     question: {
       type: String,
       minlength: 10,
-      maxlength: 1000
+      maxlength: 1000,
+      required: true
     },
 
-    User: { 
-        type: UserSchema,  
+    user: { 
+        type: String,  
         required: true
       },
 
     topic:{
       type:String,
+      required: true
     },
 
     date: {
@@ -26,6 +28,4 @@ const PostSchema = new mongoose.Schema({
 });
 
 
-const Post = mongoose.model('Post', PostSchema);
-exports.PostSchema = PostSchema;
-exports.Post = Post;
+module.exports = mongoose.model("Post", PostSchema);

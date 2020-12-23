@@ -18,7 +18,7 @@ router.post('/hireengineer',async(req,res)=>{
 
     try {
 
-        const employeeExist = await Job.findOne({employee: req.body.employee});
+        const employeeExist = await Job.findOne({employee: req.body.employee,employer: req.body.employer});
         if(employeeExist) return res.status(400).send('Employee already Hired');
         const savedJob = await job.save();
         res.json({savedJob, status:true,message:"You have successuly Hired this engineer"});
