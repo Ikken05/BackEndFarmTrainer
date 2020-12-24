@@ -106,7 +106,15 @@ router.get('/count',async (req,res)=>{
     }
 });
 
-
+router.post('/deletefield', async (req,res)=>{
+  
+    try{
+      const deletedfield = await Field.findByIdAndDelete(req.body.id); 
+      res.json({deletedfield});
+    }catch(err){
+  
+    }
+  });
 
 
 

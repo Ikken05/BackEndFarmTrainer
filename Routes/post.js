@@ -130,25 +130,24 @@ router.get('/alldownvotes',async(req,res)=>{
   }
 });
 
-router.post('removeupvote', async (req,res)=>{
+router.post('/removeupvote', async (req,res)=>{
   
   try{
-    const deletedupvote = await Upvote.findByIdAndDelete({_id:req.body.id});
-    res.json(deletedupvote);
+    const deletedupvote = await Upvote.findByIdAndDelete(req.body.id); 
+    res.json({deletedupvote});
   }catch(err){
 
   }
 });
 
-router.post('removedownvote', async (req,res)=>{
+router.post('/removedownvote', async (req,res)=>{
   
   try{
-    const deleteddownvote = await Downnvote.findByIdAndDelete({_id:req.body.id});
-    res.json(deletedownpvote);
+    const deleteddownvote = await Downvote.findByIdAndDelete(req.body.id); 
+    res.json({deleteddownvote});
   }catch(err){
 
   }
 });
-
 
 module.exports = router;
